@@ -1,0 +1,45 @@
+'''
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
+'''
+import os
+import urllib.request, urllib.error, urllib.parse,http.cookiejar
+from bs4 import BeautifulSoup
+import re
+txt='Pick a folder Number from the menu (enter n to create New folder) :'
+#get sub directory
+subd=[]
+for i,j,k in os.walk('.'):
+    subd=subd+j
+#create menu
+crn=''
+for i in range(len(subd)):
+    print(('\t'+str(i+1)+'. '+subd[i]))
+print('\n')
+target=str(eval(input('dd')))
+
+
+if (target2-1 in range(len(subd))):
+    path='./src/'+lang+'/'+subd[target2-1]
+    print('path set to ',path)
+elif target !='n': 
+    print('Directory does not exist.')
+    crn=str(input('Do you want to create new manga directory. (y/n)'))
+else:crn=str(input('Do you want to create new manga directory. (y/n)'))
+if crn == 'y' :
+    newname=str(input('enter new directory name:'))
+    if not os.path.exists(newname):
+	os.makedirs(newname)
+    
+
+
+site = "https://lhscan.net/read-the-reincarnation-magician-of-the-inferior-eyes-raw-chapter-10.html"
+req = urllib2.Request(site, headers={'User-Agent' : "Magic Browser"})
+html = urllib2.urlopen(req)
+bs = BeautifulSoup(html, 'html.parser')
+images = bs.find_all('img', {'data-src':re.compile('.jpeg')})
+for image in images: 
+    print(image['data-src']+'\n')
+
